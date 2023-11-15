@@ -22,4 +22,4 @@ plot(x=dataCPI$DATE, y=dataCPI$CPIAUCSL, type="l", xlab="Date", ylab="CPI", main
 dataInd$DATE <- as.Date(dataInd$DATE)
 plot(x=dataInd$DATE, y=dataInd$INDPRO, type="l", xlab="Date", ylab="Industrial Production", main="Monthly Industial Production between 2010 and 2019")
 
-# Clearly all time series are not stationary, so we have to transform them to make the stationary series
+# No time series is stationary, so we have to transform the data
