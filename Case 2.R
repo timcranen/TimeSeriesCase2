@@ -1,4 +1,5 @@
 rm(list=ls())
+library(tseries)
 
 # Set working directory
 setwd("~/Documents/Time series econometrics")
@@ -6,20 +7,45 @@ setwd("~/Documents/Time series econometrics")
 # Read in data from january 2010 untill december 2019 for respectively
 # the federal funds rate, the cpi and the inductial production index
 
-dataFedFunds <- read.csv("FEDFUNDS.csv")
-dataCPI <- read.csv("CPIAUCSL.csv")
-dataInd <- read.csv("INDPRO.csv")
+FEDFUNDS <- read.csv("FEDFUNDS.csv")
+CPIAUCSL <- read.csv("CPIAUCSL.csv")
+INDPRO <- read.csv("INDPRO.csv")
 
 # Plotting the Federal Funds Rate
-dataFedFunds$DATE <- as.Date(dataFedFunds$DATE)
-plot(x = dataFedFunds$DATE, y = dataFedFunds$FEDFUNDS, type = "l", xlab="Date", ylab="Federal Funds Rate", main="Monthly Federal Funds Rate between 2010 and 2019")
+FEDFUNDS$DATE <- as.Date(FEDFUNDS$DATE)
+plot(x = FEDFUNDS$DATE, y = FEDFUNDS$FEDFUNDS, type = "l", xlab="Date", ylab="Federal Funds Rate", main="Monthly Federal Funds Rate between 2010 and 2019")
 
 # Plotting the CPI
-dataCPI$DATE <- as.Date(dataCPI$DATE)
-plot(x=dataCPI$DATE, y=dataCPI$CPIAUCSL, type="l", xlab="Date", ylab="CPI", main="Monthly CPI between 2010 and 2019")
+CPIAUCSL$DATE <- as.Date(CPIAUCSL$DATE)
+plot(x=CPIAUCSL$DATE, y=CPIAUCSL$CPIAUCSL, type="l", xlab="Date", ylab="CPI", main="Monthly CPI between 2010 and 2019")
 
 # Plotting the industrial production
-dataInd$DATE <- as.Date(dataInd$DATE)
-plot(x=dataInd$DATE, y=dataInd$INDPRO, type="l", xlab="Date", ylab="Industrial Production", main="Monthly Industial Production between 2010 and 2019")
+INDPRO$DATE <- as.Date(INDPRO$DATE)
+plot(x=INDPRO$DATE, y=INDPRO$INDPRO, type="l", xlab="Date", ylab="Industrial Production", main="Monthly Industial Production between 2010 and 2019")
 
 # No time series is stationary, so we have to transform the data
+
+
+# Take difference data for the Federal Funds Rate
+diffFEDFUNDS <- diff(FEDFUNDS$FEDFUNDS)
+plot(diffFEDFUNDS, type="l")
+
+adf.test(diffFEDFUNDS)
+
+
+# Take for the CPI
+diffCPIAUCSL <- diff(diff(log(CPIAUCSL$CPIAUCSL)))
+plot(diffCPIAUCSL, type="l")
+
+adf.test(diffCPIAUCSL)
+
+# Take the log difference for the industrial production index
+diffINDPRO <- diff(log(INDPRO$INDPRO))
+plot(diffINDPRO, type="l")
+
+adf.test(diffINDPRO)
+
+
+
+
+
