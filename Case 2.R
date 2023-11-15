@@ -30,6 +30,7 @@ plot(x=INDPRO$DATE, y=INDPRO$INDPRO, type="l", xlab="Date", ylab="Industrial Pro
 diffFEDFUNDS <- diff(FEDFUNDS$FEDFUNDS)
 plot(diffFEDFUNDS, type="l")
 
+# Augmented Dickey-Fuller test to test for stationarity
 adf.test(diffFEDFUNDS)
 
 
@@ -37,12 +38,14 @@ adf.test(diffFEDFUNDS)
 diffCPIAUCSL <- diff(diff(log(CPIAUCSL$CPIAUCSL)))
 plot(diffCPIAUCSL, type="l")
 
+# Augmented Dickey-Fuller test to test for stationarity
 adf.test(diffCPIAUCSL)
 
 # Take the log difference for the industrial production index
 diffINDPRO <- diff(log(INDPRO$INDPRO))
 plot(diffINDPRO, type="l")
 
+# Augmented Dickey-Fuller test to test for stationarity
 adf.test(diffINDPRO)
 
 
