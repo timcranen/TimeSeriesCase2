@@ -56,27 +56,5 @@ data <- data.frame(
   ind = INDPRO$INDPRO
 )
 
-# Iterate over different lag orders
-lag_orders <- 1:20  # Adjust the range based on your data and context
-
-# Store AIC or BIC values for each lag order
-aic_values <- numeric(length(lag_orders))
-bic_values <- numeric(length(lag_orders))
-
-# Run the VAR model over the different lag orders and store the IC's
-for (i in seq_along(lag_orders)) {
-  current_lag <- lag_orders[i]
-  model <- VAR(data, p = current_lag, type = "const", lag.max = current_lag, season = 12)
-  aic_values[i] <- AIC(model)
-  bic_values[i] <- BIC(model)
-}
-
-# Choose the best IC
-best_aic_order <- lag_orders[which.min(aic_values)]
-best_bic_order <- lag_orders[which.min(bic_values)]
-
-
-
-
-
+VARselect(y = data, lag.max = 20)
 
