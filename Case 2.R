@@ -28,7 +28,7 @@ plot(x=INDPRO$DATE, y=INDPRO$INDPRO, type="l", xlab="Date", ylab="Industrial Pro
 
 # Take difference data for the Federal Funds Rate
 diffFEDFUNDS <- diff(FEDFUNDS$FEDFUNDS)
-plot(diffFEDFUNDS, type="l")
+plot(x=diffFEDFUNDS, type="l")
 
 # Augmented Dickey-Fuller test to test for stationarity
 adf.test(diffFEDFUNDS)
