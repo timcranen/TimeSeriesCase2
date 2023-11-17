@@ -1,6 +1,8 @@
 rm(list=ls())
+
 library(tseries)
 library(vars)
+
 # Set working directory
 setwd("~/Documents/Time series econometrics")
 
@@ -40,7 +42,6 @@ plot(x = diffCPIAUCSL, type="l")
 
 # Augmented Dickey-Fuller test to test for stationarity
 adf.test(diffCPIAUCSL)
-
 # Take the log difference for the industrial production index
 diffINDPRO <- diff(log(INDPRO$INDPRO))
 plot(x = diffINDPRO, type="l")
@@ -51,10 +52,35 @@ adf.test(diffINDPRO)
 
 # Determining the lag order of the VAR(p) process
 data <- data.frame(
-  cpi = CPIAUCSL$CPIAUCSL,
-  fed = FEDFUNDS$FEDFUNDS,
-  ind = INDPRO$INDPRO
+  cpi = diffCPIAUCSL,
+  fed = diffFEDFUNDS[1:598],
+  ind = diffINDPRO[1:598]
 )
 
 VARselect(y = data, lag.max = 20, season = 12)
+
+
+
+# GRANGER CAUSALITY
+
+# Estimating the var model for 3 lags
+var_model <- VAR(data, p = 3, season = 12, ic = "HQ")
+
+# Create matrix
+matrix <- as.matrix(data)
+
+# Test for Granger Causality, we check the bivariate cases and see if they Granger cause
+# single variable not in the bivariate cause matric given in the function. 
+
+# Perform the Granger Causality Test (H0: fed and ind do not Granger-cause cpi)
+granger_test_cpi <- causality(var_model, cause = c("fed", "ind"))
+granger_test_cpi
+
+# Perform the Granger Causality Test (H0: fed and cpi do not Granger-cause ind)
+granger_test_ind <- causality(var_model, cause = c("fed", "cpi"))
+granger_test_ind
+
+# Perform the Granger Causality Test (H0: fed and cpi do not Granger-cause ind)
+granger_test_fed <- causality(var_model, cause = c("ind", "cpi"))
+granger_test_fed
 
