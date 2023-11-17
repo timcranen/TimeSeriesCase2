@@ -56,5 +56,5 @@ data <- data.frame(
   ind = INDPRO$INDPRO
 )
 
-VARselect(y = data, lag.max = 20)
+VARselect(y = data, lag.max = 20, season = 12)
 
